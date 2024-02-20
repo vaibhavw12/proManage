@@ -31,7 +31,7 @@ export default function CardSectionComponent(props) {
                 </div>
             </div>
             {
-                modal && <CreateToDoModal />
+                modal && <CreateToDoModal close={()=>setModal(false)} />
             }
         </div>
     )
