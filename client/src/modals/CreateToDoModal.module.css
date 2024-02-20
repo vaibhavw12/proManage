@@ -1,0 +1,92 @@
+.modalContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+    position: relative;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    width: 40vw;
+    height: 60vh;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalInnerContent {
+    width: 90%;
+    height: 88%;
+}
+
+.textBox {
+    width: 100%;
+}
+
+.textBox div {
+    display: flex;
+    gap: 0.3vw;
+}
+
+.textBox input {
+    margin-top: 1vh;
+    padding-left: 1vw;
+    width: 97%;
+    height: 5vh;
+    box-shadow: 0px 1px 2px 0px rgba(77, 64, 85, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(226, 226, 226, 1);
+    color: rgba(155, 149, 159, 1);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 1px;
+}
+
+.field {
+    color: rgba(32, 16, 43, 1);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+.req {
+    color: rgba(255, 0, 0, 1);
+}
+.priorityBox{
+    margin-top: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.priorityBox_0{
+    display: flex;
+    gap: 0.3vw;
+}
+.eachPrority{
+    display: flex;
+    align-items: center;
+    gap: 0.2vw;
+    border: 1px solid rgba(226, 226, 226, 1);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    padding: 6px;
+    border-radius: 10px;
+    color: rgba(118, 117, 117, 1);
+}

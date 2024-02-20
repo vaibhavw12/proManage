@@ -1,0 +1,29 @@
+.CardSectionComponent{
+    min-width: 22vw ;
+    background: rgba(238, 242, 245, 1);
+    height: 72vh;
+    border-radius: 20px;
+}
+.HeaderOuter{
+    display: flex;
+    justify-content: center;
+}
+.Header{
+    margin-top: 2vh;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.HeaderToDo{
+    display: flex;
+    align-items: center;
+    gap: 1.5vw;
+}
+.CardSectionComponentBody{
+    max-height: 66vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+}
