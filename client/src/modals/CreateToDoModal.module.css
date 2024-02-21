@@ -17,7 +17,7 @@
     background-color: #fefefe;
     border: 1px solid #888;
     width: 40vw;
-    height: 60vh;
+    height: 70vh;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -25,6 +25,7 @@
 }
 
 .modalInnerContent {
+    position: relative;
     width: 90%;
     height: 88%;
     display: flex;
@@ -96,6 +97,10 @@
     border-radius: 10px;
     color: rgba(118, 117, 117, 1);
 }
+.eachPrority:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
 
 .checklist {
     margin-top: 2vh;
@@ -118,7 +123,10 @@
     margin-top: 1.5vh;
     padding-left: 0.5vw;
 }
-
+.addOpt:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
 .optContainer {
     display: flex;
     flex-direction: column;
@@ -134,6 +142,10 @@
     border: 1px solid rgba(226, 226, 226, 1);
     border-radius: 10px;
     height: 5vh;
+}
+.eachOption img:hover{
+    opacity: 0.8;
+    cursor: pointer;
 }
 
 .textOptBox {
@@ -154,7 +166,10 @@
     border: 2px solid rgba(226, 226, 226, 1);
     border-radius: 6px;
 }
-
+.checkbox:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
 .optContainer img {
     margin-right: 0.5vw;
 }
@@ -179,10 +194,18 @@
     border-radius: 10px;
 }
 
+.date button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
 .btns {
     display: flex;
     align-items: center;
     gap: 0.5vw;
+}
+.btnCancel:hover{
+    opacity: 0.8;
+    cursor: pointer;
 }
 
 .btnCancel {
@@ -194,7 +217,10 @@
     border: 1px solid rgba(207, 54, 54, 1);
     box-shadow: 0px 2px 12px 0px rgba(130, 105, 140, 0.2);
 }
-
+.btnSave:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
 .btnSave {
     color: rgba(255, 255, 255, 1);
     width: 8vw;
@@ -204,3 +230,36 @@
     box-shadow: 0px 2px 12px 0px rgba(130, 105, 140, 0.2);
     border: none;
 }
+
+/* Update styles for the calendar container */
+.react-calendar,
+.react-calendar__tile {
+  border: none;
+}
+.reactCalendar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0px 12px 22px 0px rgba(38, 36, 36, 0.25);
+    width: 20vw;
+  }
+  
+  /* Add styles for the buttons at the bottom of the calendar */
+  .calendarButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    cursor: pointer;
+    color: rgba(23, 162, 184, 1);
+  }
+
+  .selected {
+    background-color: rgba(238, 236, 236, 1);
+  }
+
+  
