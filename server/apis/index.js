@@ -13,7 +13,9 @@ app.use(cors())
 const port = process.env.PORT || 5000;
 
 const authRoutes = require('./routes/auth.route.js')
+const todoRoutes = require('./routes/todo.route.js')
 app.use('/api/auth', authRoutes)
+app.use('/api/auth/todo', todoRoutes)
 
 app.get('/check',(req, res)=>{
     res.json({

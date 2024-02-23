@@ -33,8 +33,8 @@ const todoSchema = new mongoose.Schema({
         ],
     },
     dueDate: {
-        type: Date,
-        required: false, // Making dueDate optional
+        type: String,
+        default: null,  // Set default value to null
     },
     inSection: {
         type: String,

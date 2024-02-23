@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './CreateToDoModal.module.css';
 import highP from '../assets/icons/high.svg';
 import modP from '../assets/icons/mod.svg';
@@ -7,6 +7,9 @@ import addOpt from '../assets/icons/addOpt.svg';
 import deleteIcon from '../assets/icons/Delete.svg';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import toast from 'react-hot-toast';
+import axios from 'axios'
+import { CREATETODO } from '../apis/EndPoints'
 
 export default function CreateToDoModal({ close }) {
     const [title, setTitle] = useState('');
@@ -15,20 +18,6 @@ export default function CreateToDoModal({ close }) {
     const [date, setDate] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
     const calendarRef = useRef(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (calendarRef.current && !calendarRef.current.contains(event.target)) {
-                setShowCalendar(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     const onChange = (newDate) => {
         setDate(newDate);
@@ -63,20 +52,71 @@ export default function CreateToDoModal({ close }) {
     };
 
     const handlePriorityClick = (selectedPriority) => {
-        setPriority(selectedPriority);
+        switch (selectedPriority) {
+            case 'HIGH':
+                setPriority('HIGH PRIORITY');
+                break;
+            case 'MODERATE':
+                setPriority('MODERATE PRIORITY');
+                break;
+            case 'LOW':
+                setPriority('LOW PRIORITY');
+                break;
+            default:
+                setPriority('');
+                break;
+        }
     };
 
-    const handleSave = () => {
-        const todoObject = {
+    const formatDate = (date) => {
+        const options = { month: 'short', day: '2-digit' };
+        return date.toLocaleDateString('en-US', options);
+    };
+
+    const handleSave = async () => {
+        if (!title) {
+            toast.error("Please fill in the title");
+            return;
+        }
+        if (!priority) {
+            toast.error("Please select a priority");
+            return;
+        }
+        const hasAtLeastOneInputFilled = options.some(opt => opt.inputValue.trim() !== '');
+        if (!hasAtLeastOneInputFilled) {
+            toast.error("Please fill in at least one checklist item");
+            return;
+        }
+        const hasEmptyChecklistItem = options.some(opt => opt.inputValue.trim() === '');
+        if (hasEmptyChecklistItem) {
+            toast.error("Checklist items cannot be empty");
+            return;
+        }
+        const formattedDate = date ? formatDate(date) : null;
+        const todoObj = {
             title,
             priority,
-            options,
-            date,
+            checkList: options.map(opt => ({ description: opt.inputValue, isChecked: opt.isChecked })),
+            dueDate: formattedDate,
+            inSection: 'ToDo',
+            createdBy: localStorage.getItem("proManage_id")
         };
-
-        console.log(todoObject);
-
-        // You can perform further actions here, such as saving the todoObject to your database or state.
+        try {
+            await axios.post(
+                `${process.env.REACT_APP_BASE_URL}${CREATETODO}`,
+                todoObj, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'jwttoken': localStorage.getItem("proManage_token"),
+                }
+            }
+            );
+            toast.success('to do created successfully.');
+            close()
+        } catch (error) {
+            toast.error('something went wrong, please try again.');
+            console.error(error);
+        }
     };
 
     return (
