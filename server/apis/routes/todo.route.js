@@ -7,8 +7,7 @@ const router = express.Router()
 const loggedIn = (req, res, next)=>{
     try{
         const {jwttoken} = req.headers
-        const user = jwt.verify(jwttoken, process.env.PRIVATEKEY)
-        // console.log(user)
+        jwt.verify(jwttoken, process.env.PRIVATEKEY)
         next(); 
     }catch(err){
         console.log(err.message)
@@ -16,5 +15,8 @@ const loggedIn = (req, res, next)=>{
 }
 
 router.post('/createtodo',loggedIn, toDoControllers.createToDo)
+router.get('/:section/todos', loggedIn, toDoControllers.getTodosBySection);
+router.patch('/update-checklist/:todoId', loggedIn, toDoControllers.updateChecklist)
+router.patch('/update-section/:todoId', loggedIn, toDoControllers.updateSection)
 
 module.exports = router

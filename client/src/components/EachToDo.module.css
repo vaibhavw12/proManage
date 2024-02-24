@@ -1,0 +1,86 @@
+.card{
+    width: 22vw;
+    background: rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+.EachToDo{
+    padding-top: 16px;
+    padding-bottom: 16px;
+    width: 20vw;
+    background: rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+.prorityBox{
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.prioritytext{
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    color: rgba(112, 112, 112, 1);
+}
+.title span{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;    
+    color: rgba(0, 0, 0, 1);
+}
+.checklist{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sections{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 6vh;
+}
+.sec_2{
+    display: flex;
+    gap: 0.5vw;
+}
+.sec_2 span{
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    color: rgba(118, 117, 117, 1);
+    height: 4vh;
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 12px;
+    background: rgba(238, 236, 236, 1);
+}
+.dueDate{
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    color: rgba(90, 90, 90, 1);
+    height: 4vh;
+    padding-top: 2px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 14px;
+    background: rgba(219, 219, 219, 1);
+}

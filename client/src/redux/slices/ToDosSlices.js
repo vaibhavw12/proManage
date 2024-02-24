@@ -6,7 +6,9 @@ const toDosSlices = createSlice({
         backlog: [],
         todo: [],
         progress: [],
-        done: []
+        done: [],
+        collapse: false,
+        update : false
     },
     reducers: {
         setBacklog: (state, action) => {
@@ -21,8 +23,14 @@ const toDosSlices = createSlice({
         setDone: (state, action) => {
             state.done = action.payload;
         },
+        setCollapse: (state) =>{
+            state.collapse = !state.collapse
+        },
+        setUpdate: (state) =>{
+            state.update = !state.update
+        }
     },
 });
 
-export const { setBacklog, setToDo, setProgress, setDone } = toDosSlices.actions;
+export const { setBacklog, setToDo, setProgress, setDone, setCollapse, setUpdate } = toDosSlices.actions;
 export default toDosSlices.reducer;

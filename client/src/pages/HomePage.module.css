@@ -78,7 +78,7 @@
     color: gray;
 }
 .rightSectionHeader{
-    margin-top: 2.5vh;
+    margin-top: 2vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -113,7 +113,7 @@
     color: rgba(0, 0, 0, 1);
 }
 .BoardComponentBody{
-    margin-top: 2vh;
+    margin-top: 1vh;
     height: 77vh;
     max-width: 85vw;
     min-width: 100%; /* Set a minimum width to always show the scrollbar */
@@ -122,5 +122,5 @@
 /* .BoardComponentBody > div{} */
 .containerTypes{
     display: flex;
-    gap: 2vw;
+    gap: 1vw;
 }
