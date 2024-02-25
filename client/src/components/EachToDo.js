@@ -9,19 +9,26 @@ import axios from 'axios'
 import { UPDATECHECKLIST, UPDATESECTION } from '../apis/EndPoints'
 import { useSelector, useDispatch } from 'react-redux';
 import { setUpdate } from '../redux/slices/ToDosSlices'
+import DeleteModal from '../modals/DeleteModal';
+import toast from 'react-hot-toast';
+import CreateToDoModal from '../modals/CreateToDoModal';
 
 export default function EachToDo({ todo }) {
 
+    // bug checklist is not getting updated on real time eveything else is getting
     const dispatch = useDispatch()
     const collapseAll = useSelector((state) => state.todo_type.collapse)
+    const update = useSelector((state) => state.todo_type.update)
+    useEffect(() => {
+        setShowChecklist(false)
+        // console.log(todo.checkList)
+    }, [collapseAll, update])
+    const { inSection, dueDate, checkList } = todo;
     const [showChecklist, setShowChecklist] = useState(false);
+    const [checkListLocal, setCheckListLocal] = useState(checkList);
     const handleToggleChecklist = () => {
         setShowChecklist(!showChecklist);
     };
-    useEffect(() => {
-        setShowChecklist(false)
-    }, [collapseAll])
-    const { inSection, dueDate, checkList } = todo;
     const priorityImages = {
         'HIGH PRIORITY': highP,
         'MODERATE PRIORITY': modP,
@@ -98,7 +105,6 @@ export default function EachToDo({ todo }) {
         updateBackground();
     }, [dueDate, inSection, isDue]);
 
-    const [checkListLocal, setCheckListLocal] = useState(checkList);
     const handleCheckboxChange = async (index) => {
         setCheckListLocal(prevChecklist => {
             const updatedChecklist = [...prevChecklist];
@@ -122,15 +128,44 @@ export default function EachToDo({ todo }) {
             return updatedChecklist;
         });
     };
-
-
+    const [showOptions, setShowOptions] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [updateToDo, setUpdateToDO] = useState(false)
+    const options = ['Edit', 'Share', 'Delete'];
+    const handleOptionClick = async (option) => {
+        setShowOptions(false);
+        if (option === 'Delete') {
+            setDeleteModal(true)
+        }else if (option === 'Share') {
+            try {
+                const linkToCopy = `${process.env.REACT_APP_CLIENT_URL}/shared-todo/${todo._id}`
+                await navigator.clipboard.writeText(linkToCopy);
+                toast.success('Link copied successfully');
+            } catch (error) {
+                console.error('Unable to copy to clipboard', error);
+            }
+        }else{
+            setUpdateToDO(true)
+        }
+    };
 
     return (
         <div className={styles.card}>
             <div className={styles.EachToDo}>
                 <div className={styles.header}>
                     <div className={styles.prorityBox}><img src={priorityImages[todo.priority]} alt='card-priority'></img><p className={styles.prioritytext}>{todo.priority}</p></div>
-                    <img src={more} alt='more-icon'></img>
+                    <div className={styles.moreContainer}>
+                        <img className={styles.filter} onClick={() => setShowOptions(!showOptions)} src={more} alt='more-icon'></img>
+                        {showOptions && (
+                            <div className={styles.optionsAll}>
+                                {options.map((option) => (
+                                    <div key={option} onClick={() => handleOptionClick(option)}>
+                                        {option}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className={styles.title}>
                     <span>{todo.title}</span>
@@ -158,6 +193,12 @@ export default function EachToDo({ todo }) {
                     </div>
                 </div>
             </div>
+            {
+                deleteModal && <DeleteModal close={() => setDeleteModal(false)} deleteById={todo._id} />
+            }
+            {
+                updateToDo && <CreateToDoModal UpdateToDo={todo} close={() => setUpdateToDO(false)} />
+            }
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './CreateToDoModal.module.css';
 import highP from '../assets/icons/high.svg';
 import modP from '../assets/icons/mod.svg';
@@ -9,9 +9,14 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import toast from 'react-hot-toast';
 import axios from 'axios'
-import { CREATETODO } from '../apis/EndPoints'
+import { useDispatch } from 'react-redux';
+import { setUpdate } from '../redux/slices/ToDosSlices'
+import { CREATETODO, UPDATETODO } from '../apis/EndPoints'
 
-export default function CreateToDoModal({ close }) {
+export default function CreateToDoModal({ close, UpdateToDo }) {
+    // console.log(UpdateToDo)
+
+    const dispatch = useDispatch()
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
     const [options, setOptions] = useState([]);
@@ -19,37 +24,64 @@ export default function CreateToDoModal({ close }) {
     const [showCalendar, setShowCalendar] = useState(false);
     const calendarRef = useRef(null);
 
+    useEffect(() => {
+        if (UpdateToDo) {
+            setTitle(UpdateToDo.title);
+            setPriority(UpdateToDo.priority);
+            setOptions(UpdateToDo.checkList);
+            const originalDate = new Date(UpdateToDo.dueDate);
+            originalDate.setFullYear(2024);
+            setDate(UpdateToDo.dueDate ? originalDate : null);
+            handlePriorityClick(UpdateToDo.priority)
+        }
+    }, [UpdateToDo]);
+
     const onChange = (newDate) => {
         setDate(newDate);
         setShowCalendar(false);
+    };
+
+    const handleDeleteOption = (index) => {
+        console.log('Before Delete:', options);
+        const updatedOptions = options.filter((option, i) => i !== index);
+        setOptions(updatedOptions);
+        console.log('After Delete:', updatedOptions);
     };
 
     const handleAddOption = () => {
         const newOption = {
             id: options.length,
             isChecked: false,
-            inputValue: '',
+            description: '',
         };
         setOptions([...options, newOption]);
     };
 
+
     const handleCheckboxChange = (index) => {
-        const updatedOptions = [...options];
+        // const updatedOptions = [...options];
+        // updatedOptions[index].isChecked = !updatedOptions[index].isChecked;
+        // setOptions(updatedOptions);
+        const updatedOptions = options.map(option => ({ ...option }));
         updatedOptions[index].isChecked = !updatedOptions[index].isChecked;
         setOptions(updatedOptions);
     };
 
     const handleInputChange = (index, value) => {
-        const updatedOptions = [...options];
-        updatedOptions[index].inputValue = value;
+        // const updatedOptions = [...options];
+        // updatedOptions[index].description = value;
+        // setOptions(updatedOptions);
+        const updatedOptions = options.map(option => ({ ...option }));
+        updatedOptions[index].description = value;
         setOptions(updatedOptions);
     };
 
-    const handleDeleteOption = (index) => {
-        const updatedOptions = [...options];
-        updatedOptions.splice(index, 1);
-        setOptions(updatedOptions);
-    };
+    // const handleDeleteOption = (index) => {
+    //     console.log(index)
+    //     const updatedOptions = options.filter((option, i) => i !== index);
+    //     setOptions(updatedOptions);
+    //     console.log(options)
+    // };
 
     const handlePriorityClick = (selectedPriority) => {
         switch (selectedPriority) {
@@ -60,6 +92,15 @@ export default function CreateToDoModal({ close }) {
                 setPriority('MODERATE PRIORITY');
                 break;
             case 'LOW':
+                setPriority('LOW PRIORITY');
+                break;
+            case 'HIGH PRIORITY':
+                setPriority('HIGH PRIORITY');
+                break;
+            case 'MODERATE PRIORITY':
+                setPriority('MODERATE PRIORITY');
+                break;
+            case 'LOW PRIORITY':
                 setPriority('LOW PRIORITY');
                 break;
             default:
@@ -82,12 +123,12 @@ export default function CreateToDoModal({ close }) {
             toast.error("Please select a priority");
             return;
         }
-        const hasAtLeastOneInputFilled = options.some(opt => opt.inputValue.trim() !== '');
+        const hasAtLeastOneInputFilled = options.some(opt => opt.description.trim() !== '');
         if (!hasAtLeastOneInputFilled) {
             toast.error("Please fill in at least one checklist item");
             return;
         }
-        const hasEmptyChecklistItem = options.some(opt => opt.inputValue.trim() === '');
+        const hasEmptyChecklistItem = options.some(opt => opt.description.trim() === '');
         if (hasEmptyChecklistItem) {
             toast.error("Checklist items cannot be empty");
             return;
@@ -96,9 +137,9 @@ export default function CreateToDoModal({ close }) {
         const todoObj = {
             title,
             priority,
-            checkList: options.map(opt => ({ description: opt.inputValue, isChecked: opt.isChecked })),
+            checkList: options.map(opt => ({ description: opt.description, isChecked: opt.isChecked })),
             dueDate: formattedDate,
-            inSection: 'ToDo',
+            inSection: 'ToDo',  // by defualt its in todo
             createdBy: localStorage.getItem("proManage_id")
         };
         try {
@@ -111,12 +152,63 @@ export default function CreateToDoModal({ close }) {
                 }
             }
             );
+            dispatch(setUpdate())
             toast.success('to do created successfully.');
             close()
         } catch (error) {
             toast.error('something went wrong, please try again.');
             console.error(error);
         }
+    };
+
+    const handleUpdate = async () => {
+        const formattedDate = date ? formatDate(date) : null;
+        if (!title) {
+            toast.error("Please fill in the title");
+            return;
+        }
+        const hasAtLeastOneInputFilled = options.some(opt => opt.description.trim() !== '');
+        if (!hasAtLeastOneInputFilled) {
+            toast.error("Please fill in at least one checklist item");
+            return;
+        }
+        const hasEmptyChecklistItem = options.some(opt => opt.description.trim() === '');
+        if (hasEmptyChecklistItem) {
+            toast.error("Checklist items cannot be empty");
+            return;
+        }
+        const updatetodoObj = {
+            title,
+            priority,
+            checkList: options.map(opt => ({ description: opt.description, isChecked: opt.isChecked })),
+            dueDate: formattedDate,
+        };
+        console.log(updatetodoObj)
+        try {
+            await axios.patch(
+                `${process.env.REACT_APP_BASE_URL}${UPDATETODO}${UpdateToDo._id}`,
+                updatetodoObj,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'jwttoken': localStorage.getItem("proManage_token"),
+                    },
+                }
+            );
+            dispatch(setUpdate())
+            toast.success('Todo updated successfully.');
+            close();
+        } catch (error) {
+            toast.error('Something went wrong, please try again.');
+            console.error(error);
+        }
+    }
+
+    const formatReqDate = (date) => {
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
     };
 
     return (
@@ -141,21 +233,21 @@ export default function CreateToDoModal({ close }) {
                                 <span className={styles.req}>*</span>
                             </div>
                             <div
-                                className={`${styles.eachPrority} ${priority === 'HIGH' ? styles.selected : ''}`}
+                                className={`${styles.eachPrority} ${priority === 'HIGH PRIORITY' ? styles.selected : ''}`}
                                 onClick={() => handlePriorityClick('HIGH')}
                             >
                                 <img src={highP} alt='high-p' />
                                 <span>HIGH PRIORITY</span>
                             </div>
                             <div
-                                className={`${styles.eachPrority} ${priority === 'MODERATE' ? styles.selected : ''}`}
+                                className={`${styles.eachPrority} ${priority === 'MODERATE PRIORITY' ? styles.selected : ''}`}
                                 onClick={() => handlePriorityClick('MODERATE')}
                             >
                                 <img src={modP} alt='mod-p' />
                                 <span>MODERATE PRIORITY</span>
                             </div>
                             <div
-                                className={`${styles.eachPrority} ${priority === 'LOW' ? styles.selected : ''}`}
+                                className={`${styles.eachPrority} ${priority === 'LOW PRIORITY' ? styles.selected : ''}`}
                                 onClick={() => handlePriorityClick('LOW')}
                             >
                                 <img src={lowP} alt='low-p' />
@@ -169,7 +261,7 @@ export default function CreateToDoModal({ close }) {
                             </div>
                             <div className={styles.optContainer}>
                                 {options.map((option, index) => (
-                                    <div className={styles.eachOption} key={option.id}>
+                                    <div key={index} className={styles.eachOption}>
                                         <input
                                             type="checkbox"
                                             checked={option.isChecked}
@@ -178,7 +270,7 @@ export default function CreateToDoModal({ close }) {
                                         />
                                         <input
                                             type="text"
-                                            value={option.inputValue}
+                                            value={option.description}
                                             onChange={(e) => handleInputChange(index, e.target.value)}
                                             className={styles.textOptBox}
                                             placeholder='Add a task'
@@ -206,25 +298,30 @@ export default function CreateToDoModal({ close }) {
                                 }}
                                 className={showCalendar ? `${styles.active}` : ''}
                             >
-                                {date ? date.toDateString() : 'Select Due Date'}
+                                {date ? formatReqDate(date) : 'Select Due Date'}
                             </button>
                             {showCalendar && (
                                 <div ref={calendarRef} className={`${styles.calendar} ${styles.reactCalendar}`}>
                                     <Calendar
                                         onChange={onChange}
                                         value={date}
-                                        minDate={new Date()} // Restricts selection to dates on or after the current date
+                                        minDate={new Date()}
                                     />
                                     <div className={styles.calendarButtons}>
-                                        <span onClick={() => setDate(null)}>Clear</span>
-                                        <span onClick={() => setDate(new Date())}>Today</span>
+                                        <span onClick={() => { setDate(null); setShowCalendar(false); }}>Clear</span>
+                                        <span onClick={() => { setDate(new Date()); setShowCalendar(false); }}>Today</span>
                                     </div>
                                 </div>
                             )}
                         </div>
                         <div className={styles.btns}>
                             <button onClick={() => close()} className={styles.btnCancel}>Cancel</button>
-                            <button onClick={handleSave} className={styles.btnSave}>Save</button>
+                            {
+                                !UpdateToDo ?
+                                    <button onClick={handleSave} className={styles.btnSave}>Save</button>
+                                    :
+                                    <button onClick={handleUpdate} className={styles.btnSave}>Update</button>
+                            }
                         </div>
                     </div>
                 </div>

@@ -110,11 +110,65 @@ const updateSection = async (req, res, next) => {
     }
 };
 
+const deleteToDo = async (req, res, next) => {
+    try {
+        const { todoId } = req.params;
+        const deletedTodo = await todoModel.findByIdAndDelete(todoId);
+        await authModel.findByIdAndUpdate(
+            deletedTodo.createdBy,
+            { $pull: { createdToDos: todoId } }
+        );
+        res.status(200).json({ message: 'Todo deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting todo:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const shareToDo = async (req, res, next) => {
+    try {
+        const { todoId } = req.params;
+        const todo = await todoModel.findById(todoId);
+        res.status(200).json({ todo });
+    } catch (error) {
+        console.error('Error fetching todo details:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const updateToDo = async (req, res, next) => {
+    try {
+        const { todoId } = req.params;
+        const updatetodoObj = req.body
+        const updatedTodo = await todoModel.findByIdAndUpdate(todoId, updatetodoObj, { new: true });
+        return res.json({ success: true, message: 'Todo updated successfully', updatedTodo });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const getAnalytics = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const todos = await todoModel.find({ createdBy: userId });
+        res.status(200).json({ todos });
+    } catch (error) {
+        console.error('Error fetching todos:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     createToDo,
     getTodosBySection,
     updateChecklist,
-    updateSection
+    updateSection,
+    deleteToDo,
+    shareToDo,
+    updateToDo,
+    getAnalytics
 };
 
 // try {

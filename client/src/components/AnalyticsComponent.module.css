@@ -1,0 +1,51 @@
+.AnalyticsComponent{
+    width: 85vw;
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.header{
+    margin-left: 5vw;
+    margin-top: 4vh;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+    color: rgba(0, 0, 0, 1);
+}
+.cards{
+    display: flex;
+    align-items: center;
+    margin-left: 8vw;
+    margin-top: 10vh;
+    gap: 5vw;
+}
+.cardLeft, .cardRight{
+    display: flex;
+    flex-direction: column;
+    width: 22vw;
+}
+.each{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.eachLeft{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+.eachLeft p{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 1);
+}
+.eachRight{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;  
+    color: rgba(0, 0, 0, 1);
+}

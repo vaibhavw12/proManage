@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import styles from './HomePage.module.css'
-import appIcon from '../assets/icons/codesandbox.svg'
-import boardIcon from '../assets/icons/board.svg'
-import analyticsIcon from '../assets/icons/analytics.svg'
-import settingsIcon from '../assets/icons/settings.svg'
-import logoutIcon from '../assets/icons/Logout.svg'
-import BoardComponent from '../components/BoardComponent'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './HomePage.module.css';
+import appIcon from '../assets/icons/codesandbox.svg';
+import boardIcon from '../assets/icons/board.svg';
+import analyticsIcon from '../assets/icons/analytics.svg';
+import settingsIcon from '../assets/icons/settings.svg';
+import logoutIcon from '../assets/icons/Logout.svg';
+import BoardComponent from '../components/BoardComponent';
+import AnalyticsComponent from '../components/AnalyticsComponent';
+import SettingsComponent from '../components/SettingsComponent';
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const [activeComponent, setActiveComponent] = useState('board');
 
-  const navigate = useNavigate()
   useEffect(() => {
-    if (localStorage.getItem("proManage_name".length < 1) || (localStorage.getItem("proManage_token".length < 1))) {
-      navigate('/register')
+    if (localStorage.getItem('proManage_name').length < 1 || localStorage.getItem('proManage_token').length < 1) {
+      navigate('/register');
     }
-  }, [navigate])
-  
+  }, [navigate]);
+
+  const handleComponentChange = (component) => {
+    setActiveComponent(component);
+  };
+
   return (
     <div className={styles.HomePage}>
       <div className={styles.leftSection}>
@@ -26,21 +33,21 @@ export default function HomePage() {
               <img src={appIcon} alt='board-icon'></img>
               <span className={styles.appName}>Pro Manage</span>
             </div>
-            <div>
+            <div onClick={() => handleComponentChange('board')}>
               <img src={boardIcon} alt='board-icon'></img>
               <span>Board</span>
             </div>
-            <div>
+            <div onClick={() => handleComponentChange('analytics')}>
               <img src={analyticsIcon} alt='analytics-icon'></img>
               <span>Analytics</span>
             </div>
-            <div>
+            <div onClick={() => handleComponentChange('settings')}>
               <img src={settingsIcon} alt='settings-icon'></img>
               <span>Settings</span>
             </div>
           </div>
           <div className={styles.leftSectionLower}>
-            <div>
+            <div onClick={() => handleComponentChange('logout')}>
               <img src={logoutIcon} alt='logout-icon'></img>
               <span>Logout</span>
             </div>
@@ -48,8 +55,10 @@ export default function HomePage() {
         </div>
       </div>
       <div className={styles.rightSection}>
-        <BoardComponent />
+        {activeComponent === 'board' && <BoardComponent />}
+        {activeComponent === 'analytics' && <AnalyticsComponent />}
+        {activeComponent === 'settings' && <SettingsComponent />}
       </div>
     </div>
-  )
+  );
 }

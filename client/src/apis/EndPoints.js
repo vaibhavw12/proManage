@@ -12,3 +12,11 @@ export const GETTODO = '/api/auth/todo'
 export const UPDATECHECKLIST = '/api/auth/todo/update-checklist/'
 // updating section of todo
 export const UPDATESECTION = '/api/auth/todo/update-section/'
+// delete todo
+export const DELETETODO = '/api/auth/todo/delete-todo/'
+// get todo to share
+export const SHAREDTODO = '/api/auth/todo/get-todo/'
+// updationg todo
+export const UPDATETODO = '/api/auth/todo/update-todo/'
+// analytics 
+export const ANALYTICS = '/api/auth/todo/analytics/'
