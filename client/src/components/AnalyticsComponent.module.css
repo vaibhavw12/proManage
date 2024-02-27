@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     margin-left: 8vw;
-    margin-top: 10vh;
+    margin-top: 6vh;
     gap: 5vw;
 }
 .cardLeft, .cardRight{

@@ -9,20 +9,38 @@ import logoutIcon from '../assets/icons/Logout.svg';
 import BoardComponent from '../components/BoardComponent';
 import AnalyticsComponent from '../components/AnalyticsComponent';
 import SettingsComponent from '../components/SettingsComponent';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { setBoard, setAnalytics, setSettings } from '../redux/slices/activeTab'
+import Logout from '../modals/Logout';
 
 export default function HomePage() {
+
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  const [activeComponent, setActiveComponent] = useState('board');
+  const board = useSelector((state)=>state.tabs.board)
+  const analytics = useSelector((state)=>state.tabs.analytics)
+  const settings = useSelector((state)=>state.tabs.settings)
+  const [logoutModal ,setLogoutModal] = useState(false)
 
   useEffect(() => {
-    if (localStorage.getItem('proManage_name').length < 1 || localStorage.getItem('proManage_token').length < 1) {
+    if (!localStorage.getItem('proManage_name') || !localStorage.getItem('proManage_token')) {
       navigate('/register');
     }
   }, [navigate]);
 
-  const handleComponentChange = (component) => {
-    setActiveComponent(component);
+  const handleComponentChange = (tab) => {
+    if(tab === 'board'){
+      dispatch(setBoard(true))
+    }if(tab === 'analytics'){
+      dispatch(setAnalytics(true))
+    }if(tab === 'settings'){
+      dispatch(setSettings(true))
+    }
   };
+
+  const logout = ()=>{
+    setLogoutModal(true)
+  }
 
   return (
     <div className={styles.HomePage}>
@@ -49,16 +67,19 @@ export default function HomePage() {
           <div className={styles.leftSectionLower}>
             <div onClick={() => handleComponentChange('logout')}>
               <img src={logoutIcon} alt='logout-icon'></img>
-              <span>Logout</span>
+              <span onClick={logout}>Logout</span>
             </div>
           </div>
         </div>
       </div>
       <div className={styles.rightSection}>
-        {activeComponent === 'board' && <BoardComponent />}
-        {activeComponent === 'analytics' && <AnalyticsComponent />}
-        {activeComponent === 'settings' && <SettingsComponent />}
+        {board && <BoardComponent />}
+        {analytics && <AnalyticsComponent />}
+        {settings && <SettingsComponent />}
       </div>
+      {
+        logoutModal && <Logout close={()=>setLogoutModal(false)} />
+      }
     </div>
   );
 }

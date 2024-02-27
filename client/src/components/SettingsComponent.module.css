@@ -1,0 +1,23 @@
+.SettingsComponent{
+    width: 85vw;
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.header{
+    margin-left: 5vw;
+    margin-top: 4vh;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+    color: rgba(0, 0, 0, 1);
+}
+.registerForm{
+    margin-top: 6vh;
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    margin-left: 5vw;
+}

@@ -1,9 +1,16 @@
 // api endpoints
 
+// user apis
 // post req
 export const REGISTER = '/api/auth/register'
 // get req
 export const LOGIN = '/api/auth/login'
+// get profile
+export const PROFILE = '/api/auth/get-profile/'
+// update profile
+export const UPDATEPROFILE = '/api/auth/update-profile/'
+
+// todos api
 // create todo
 export const CREATETODO = '/api/auth/todo/createtodo'
 // get todo
