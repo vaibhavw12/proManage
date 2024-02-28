@@ -243,7 +243,7 @@
         border-radius: 2px;
     }
     .inputBox{
-        width: 100%;
+        width: 50vw;
         border: none;
         outline: none;
         font-family: 'Inter', sans-serif;
