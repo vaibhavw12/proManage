@@ -125,3 +125,18 @@
     font-weight: 400;
     line-height: 39px;    
 }
+.btnReg:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 0.99;
+}
+.btnLog:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 0.99;
+}
+.passIcon:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 0.99;
+}

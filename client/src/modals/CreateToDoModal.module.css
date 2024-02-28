@@ -100,6 +100,7 @@
 .eachPrority:hover{
     cursor: pointer;
     opacity: 0.8;
+    scale: 0.99;
 }
 
 .checklist {
@@ -126,6 +127,7 @@
 .addOpt:hover{
     opacity: 0.8;
     cursor: pointer;
+    scale: 0.99;
 }
 .optContainer {
     display: flex;
@@ -146,6 +148,7 @@
 .eachOption img:hover{
     opacity: 0.8;
     cursor: pointer;
+    scale: 0.99;
 }
 
 .textOptBox {
@@ -169,6 +172,7 @@
 .checkbox:hover{
     opacity: 0.8;
     cursor: pointer;
+    scale: 0.99;
 }
 .optContainer img {
     margin-right: 0.5vw;
@@ -197,6 +201,7 @@
 .date button:hover{
     opacity: 0.8;
     cursor: pointer;
+    scale: 0.99;
 }
 .btns {
     display: flex;
@@ -206,6 +211,7 @@
 .btnCancel:hover{
     opacity: 0.8;
     cursor: pointer;
+    scale: 0.99;
 }
 
 .btnCancel {
@@ -220,6 +226,7 @@
 .btnSave:hover{
     opacity: 0.8;
     cursor: pointer;
+    scale: 0.99;
 }
 .btnSave {
     color: rgba(255, 255, 255, 1);

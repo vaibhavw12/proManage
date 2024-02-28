@@ -18,7 +18,7 @@ export default function LoginPage() {
     setPasswordView((prevState) => !prevState);
   };
 
-  const goToRegister = ()=>{
+  const goToRegister = () => {
     navigate('/register')
   }
 
@@ -34,7 +34,7 @@ export default function LoginPage() {
     }));
   };
 
-  const handleLoginSubmit = async(e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios
@@ -82,6 +82,7 @@ export default function LoginPage() {
                   type="email"
                   value={loginState.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
+                  required
                 />
               </div>
             </label>
@@ -93,8 +94,9 @@ export default function LoginPage() {
                   type={passwordView ? 'text' : 'password'}
                   value={loginState.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
+                  required
                 />
-                <img onClick={() => managePasswordView('password')} src={passwordView ? hiddenActiveIcon : hiddenInactiveIcon} alt='toggle-password-icon'></img>
+                <img className={styles.passIcon} onClick={() => managePasswordView('password')} src={passwordView ? hiddenActiveIcon : hiddenInactiveIcon} alt='toggle-password-icon'></img>
               </div>
             </label>
             <button className={styles.btnReg} type="submit">Login</button>

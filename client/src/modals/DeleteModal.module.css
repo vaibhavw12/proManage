@@ -74,8 +74,10 @@
 .deleteBtn:hover{
     cursor: pointer;
     opacity: 0.8;
+    scale: 0.99;
 }
 .cancleBtn:hover{
     cursor: pointer;
     opacity: 0.8;
+    scale: 0.99;
 }

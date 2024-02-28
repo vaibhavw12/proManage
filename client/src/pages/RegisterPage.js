@@ -41,7 +41,7 @@ export default function RegisterPage() {
       [field]: value,
     }));
   };
-  const handleRegisterSubmit = async(e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (registerState.password === registerState.confirmPassword) {
       try {
@@ -65,7 +65,7 @@ export default function RegisterPage() {
       } catch (error) {
         console.log(error);
       }
-    }else{
+    } else {
       toast.error("Passwords do not match, Please check and try again.")
     }
   };
@@ -91,6 +91,7 @@ export default function RegisterPage() {
                   type="text"
                   value={registerState.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
+                  required
                 />
               </div>
             </label>
@@ -102,6 +103,7 @@ export default function RegisterPage() {
                   type="email"
                   value={registerState.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
+                  required
                 />
               </div>
             </label>
@@ -113,8 +115,9 @@ export default function RegisterPage() {
                   type={passwordView ? 'text' : 'password'}
                   value={registerState.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
+                  required
                 />
-                <img onClick={() => managePasswordView('password')} src={passwordView ? hiddenActiveIcon : hiddenInactiveIcon} alt='toggle-password-icon'></img>
+                <img className={styles.passIcon} onClick={() => managePasswordView('password')} src={passwordView ? hiddenActiveIcon : hiddenInactiveIcon} alt='toggle-password-icon'></img>
               </div>
             </label>
             <label className={styles.inputLabel}>
@@ -125,14 +128,16 @@ export default function RegisterPage() {
                   type={confirmPasswordView ? 'text' : 'password'}
                   value={registerState.confirmPassword}
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  required
                 />
-                <img onClick={() => managePasswordView('confirmPassword')} src={confirmPasswordView ? hiddenActiveIcon : hiddenInactiveIcon} alt='toggle-confirm-password-icon'></img>
+                <img className={styles.passIcon} onClick={() => managePasswordView('confirmPassword')} src={confirmPasswordView ? hiddenActiveIcon : hiddenInactiveIcon} alt='toggle-confirm-password-icon'></img>
               </div>
             </label>
             <button className={styles.btnReg} type="submit">Register</button>
             <div>Have an account ?</div>
             <button onClick={goToLogin} className={styles.btnLog}>Log in</button>
           </form>
+
         </div>
       </div>
     </div>

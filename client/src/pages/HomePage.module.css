@@ -124,3 +124,8 @@
     display: flex;
     gap: 1vw;
 }
+.filter:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 0.99;
+}

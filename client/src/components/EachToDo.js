@@ -136,7 +136,7 @@ export default function EachToDo({ todo }) {
         setShowOptions(false);
         if (option === 'Delete') {
             setDeleteModal(true)
-        }else if (option === 'Share') {
+        } else if (option === 'Share') {
             try {
                 const linkToCopy = `${process.env.REACT_APP_CLIENT_URL}/shared-todo/${todo._id}`
                 await navigator.clipboard.writeText(linkToCopy);
@@ -144,7 +144,7 @@ export default function EachToDo({ todo }) {
             } catch (error) {
                 console.error('Unable to copy to clipboard', error);
             }
-        }else{
+        } else {
             setUpdateToDO(true)
         }
     };
@@ -171,19 +171,21 @@ export default function EachToDo({ todo }) {
                     <span>{todo.title}</span>
                 </div>
                 <div className={styles.checklist}>
-                    <span onClick={handleToggleChecklist}>Checklist({checkListLocal.filter(item => item.isChecked).length}/{checkListLocal.length})</span>
-                    <img src={arrowDown} alt='arrow-icon' onClick={handleToggleChecklist} />
+                    <span>Checklist({checkListLocal.filter(item => item.isChecked).length}/{checkListLocal.length})</span>
+                    <img className={styles.hover} src={arrowDown} alt='arrow-icon' onClick={handleToggleChecklist} />
                 </div>
-                {showChecklist && checkListLocal && checkListLocal.map((item, index) => (
-                    <div key={index}>
-                        <input
-                            type="checkbox"
-                            checked={item.isChecked}
-                            onChange={() => handleCheckboxChange(index)}
-                        />
-                        <span>{item.description}</span>
-                    </div>
-                ))}
+                <div style={{ opacity: showChecklist ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }} className={styles.checklistContent}>
+                    {showChecklist && checkListLocal && checkListLocal.map((item, index) => (
+                        <div className={styles.opt} key={index}>
+                            <input
+                                type="checkbox"
+                                checked={item.isChecked}
+                                onChange={() => handleCheckboxChange(index)}
+                            />
+                            <span>{item.description}</span>
+                        </div>
+                    ))}
+                </div>
                 <div className={styles.sections}>
                     <div className={styles.sec_1}>
                         {dueDate && <p style={{ background: background, color: textColor }} className={styles.dueDate}>{dueDate}</p>}

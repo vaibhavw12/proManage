@@ -37,18 +37,86 @@
     color: rgba(112, 112, 112, 1);
 }
 
-.title span {
+.title {
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 27px;
     color: rgba(0, 0, 0, 1);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 54px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.title:hover {
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    max-height: 112px;
+    overflow: visible;
 }
 
 .checklist {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.opt {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(226, 226, 226, 1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+}
+
+.opt input {
+    margin-right: 8px;
+    /* Adjust spacing between checkbox and text */
+}
+
+.opt span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 34px;
+    overflow: hidden;
+    transition: -webkit-line-clamp 0.3s ease;
+}
+
+.opt:hover span {
+    -webkit-line-clamp: 4;
+    /* Show up to 4 lines on hover */
+    max-height: 80px;
+    /* Unset max-height on hover to show all lines */
+}
+
+.opt input {
+    border: 2px solid rgba(226, 226, 226, 1);
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+}
+
+/* 
+.opt input:checked + span::before {
+    background-color: rgba(23, 162, 184, 1) !important; 
+    border-color: rgba(23, 162, 184, 1) !important;
+}
+ */
+
+.opt input:hover {
+    cursor: pointer;
+    scale: 1.1;
+    opacity: 0.8;
 }
 
 .sections {
@@ -130,11 +198,19 @@
 .filter:hover {
     cursor: pointer;
     opacity: 0.8;
+    scale: 1.1;
 }
 
 .sectionButton:hover {
     cursor: pointer;
     opacity: 0.8;
+    scale: 1.1;
+}
+
+.hover:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 1.1;
 }
 
 .shareToast {
@@ -144,3 +220,10 @@
     border: 1px solid rgba(72, 193, 181, 1);
     box-shadow: 0px 4px 16px 0px rgba(16, 11, 39, 0.08);
 }
+
+.checklistContent{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+  

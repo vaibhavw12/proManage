@@ -25,9 +25,9 @@ export default function CardSectionComponent(props) {
                         <span>{props.name}</span>
                         <div className={styles.HeaderToDo}>
                             {
-                                props.name === "To do" && <img onClick={createToDo} src={addToDos} alt='addToDos-icon'></img>
+                                props.name === "To do" && <img className={styles.hover} onClick={createToDo} src={addToDos} alt='addToDos-icon'></img>
                             }
-                            <img onClick={()=>dispatch(setCollapse())}  src={collapseAllIcon} alt='collapse-icon'></img>
+                            <img className={styles.hover} onClick={()=>dispatch(setCollapse())}  src={collapseAllIcon} alt='collapse-icon'></img>
                         </div>
                     </div>
                 </div>

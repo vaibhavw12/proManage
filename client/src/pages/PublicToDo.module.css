@@ -26,16 +26,17 @@
 }
 .card{
     width: 45vw;
-    height: 65vh;
+    height: auto;
     border: 2px solid rgba(237, 245, 254, 1);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 0px;
 }
 .content{
     width: 40vw;
-    height: 55vh;
+    height: auto;
 }
 .priority{
     display: flex;
@@ -52,12 +53,25 @@
     line-height: 12px;
     color: rgba(112, 112, 112, 1);
 }
-.title span{
+.title {
     font-family: 'Poppins', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
-    line-height: 33px;
+    line-height: 27px;
     color: rgba(0, 0, 0, 1);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 54px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.title:hover {
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    max-height: 112px;
+    overflow: visible;
 }
 .checklist p{
     font-family: 'Inter', sans-serif;
@@ -69,19 +83,23 @@
 .checklist > div{
     display: flex;
     flex-direction: column;
-    gap: 2.5vh;
+    gap: 1vh;
+    max-height: 45vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .each{
-    width: 100%;
+    width: 96%;
     height: 6vh;
     display: flex;
     align-items: center;
     border: 1px solid rgba(226, 226, 226, 1);
     border-radius: 12px;
+    padding: 10px 10px;
 }
 .checkBox{
     width: 2vw;
-    height: 3vh;
+    height: 2vh;
     border-radius: 2px;
 }
 .inputBox{
@@ -117,4 +135,145 @@
     border-radius: 8px;
     border: none;
     padding: 4px 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .PublicToDo{
+        width: 100vw;
+        height: 100vh;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+    .header{
+        display: flex;
+        align-items: center;
+        gap: 1vw;
+        margin-left: 4vw;
+        margin-top: 2vh;
+    }
+    .header  p{
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 24px;
+        color: rgba(0, 0, 0, 1);
+    }
+    .container{
+        margin-top: 4vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .card{
+        width: 80vw;
+        height: auto;
+        border: 2px solid rgba(237, 245, 254, 1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0px;
+    }
+    .content{
+        width: 70vw;
+        height: auto;
+    }
+    .priority{
+        display: flex;
+        align-items: center;
+        gap: 0.5vw;
+    }
+    .priority img{
+        width: 0.8vw;
+    }
+    .priority p{
+        font-family: 'Poppins', sans-serif;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 12px;
+        color: rgba(112, 112, 112, 1);
+    }
+    .title {
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 27px;
+        color: rgba(0, 0, 0, 1);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        max-height: 54px;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .title:hover {
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        max-height: 112px;
+        overflow: visible;
+    }
+    .checklist p{
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 17px;
+        color: rgba(0, 0, 0, 1);
+    }
+    .checklist > div{
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+        max-height: 60vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .each{
+        width: 96%;
+        height: 6vh;
+        display: flex;
+        align-items: center;
+        border: 1px solid rgba(226, 226, 226, 1);
+        border-radius: 12px;
+        padding: 10px 10px;
+    }
+    .checkBox{
+        width: 2vw;
+        height: 2vh;
+        border-radius: 2px;
+    }
+    .inputBox{
+        width: 100%;
+        border: none;
+        outline: none;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19px;
+        color: rgba(0, 0, 0, 1);    
+    }
+    .dueDate{
+        margin-top: 2vh;
+        display: flex;
+        align-items: center;
+        gap: 1vw;
+    }
+    .dueDate p{
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 21px;  
+        color: rgba(0, 0, 0, 1);
+    }
+    .dueDate button{
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 21px;
+        color: rgba(255, 255, 255, 1);
+        background: rgba(207, 54, 54, 1);
+        border-radius: 8px;
+        border: none;
+        padding: 4px 10px;
+    }
 }
