@@ -66,8 +66,17 @@ export default function AnalyticsComponent() {
       setLowPriorityCount(counts['LOW PRIORITY']);
     };
     const updateDueDateCounts = (todos) => {
-      let overdueCount = 0;   
-      setOverdueCount(overdueCount);
+      const options = { month: 'short', day: '2-digit' };
+      const today = new Date().toLocaleDateString('en-US', options);
+      let dueCount = 0
+      todos.forEach((todo) => {
+        if(todo.inSection !== 'Done' && todo.dueDate !== null){
+          if(todo.dueDate <= today){
+            dueCount++
+          }
+        }
+      });
+      setOverdueCount(dueCount)
     };
     fetchUserTodos();
   }, []);

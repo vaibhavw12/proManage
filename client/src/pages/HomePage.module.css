@@ -16,12 +16,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
 }
 .leftSectionUpper{
     display: flex;
     flex-direction: column;
-    gap: 4vh;
+    gap: 1vh;
 }
 .leftSectionUpper > div,.leftSectionLower > div{
     display: flex;
@@ -32,9 +31,11 @@
     font-weight: 500;
     line-height: 24px;
     color: rgba(112, 112, 112, 1);
+    width: 10vw;
 }
 .appHeader{
-    margin-bottom: 1vh;
+    margin-bottom: 2vh;
+    padding-left: 3.5vw;
 }
 .appName{
     font-family: 'Poppins' , sans-serif;
@@ -78,7 +79,7 @@
     color: gray;
 }
 .rightSectionHeader{
-    margin-top: 2vh;
+    margin-top: 0vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -112,13 +113,6 @@
     line-height: 24px;
     color: rgba(0, 0, 0, 1);
 }
-.BoardComponentBody{
-    margin-top: 1vh;
-    height: 77vh;
-    max-width: 85vw;
-    min-width: 100%; /* Set a minimum width to always show the scrollbar */
-    overflow-x: scroll;
-}
 /* .BoardComponentBody > div{} */
 .containerTypes{
     display: flex;
@@ -128,4 +122,37 @@
     cursor: pointer;
     opacity: 0.8;
     scale: 0.99;
+}
+.componentHover{
+    padding-left: 3.5vw;
+    height: 6vh;
+}
+.componentHover:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 0.99;
+}
+.BoardComponentBody {
+    margin-top: 1vh;
+    height: 82vh;
+    max-width: 85vw;
+    min-width: 100%;
+    overflow-x: scroll;
+}
+
+.BoardComponentBody::-webkit-scrollbar {
+    height: 12px;
+}
+
+.BoardComponentBody::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color of the tracking area */
+}
+
+.BoardComponentBody::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 183, 197, 1); /* Color of the thumb */
+    border-radius: 6px; /* Rounded corners of the thumb */
+}
+
+.BoardComponentBody::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the thumb on hover */
 }

@@ -51,21 +51,21 @@ export default function HomePage() {
               <img src={appIcon} alt='board-icon'></img>
               <span className={styles.appName}>Pro Manage</span>
             </div>
-            <div onClick={() => handleComponentChange('board')}>
+            <div style={ board ? {background:'rgba(67, 145, 237, 0.1)'} : {}} className={styles.componentHover} onClick={() => handleComponentChange('board')}>
               <img src={boardIcon} alt='board-icon'></img>
               <span>Board</span>
             </div>
-            <div onClick={() => handleComponentChange('analytics')}>
+            <div style={ analytics ? {background:'rgba(67, 145, 237, 0.1)'} : {}} className={styles.componentHover} onClick={() => handleComponentChange('analytics')}>
               <img src={analyticsIcon} alt='analytics-icon'></img>
               <span>Analytics</span>
             </div>
-            <div onClick={() => handleComponentChange('settings')}>
+            <div style={ settings ? {background:'rgba(67, 145, 237, 0.1)'} : {}} className={styles.componentHover} onClick={() => handleComponentChange('settings')}>
               <img src={settingsIcon} alt='settings-icon'></img>
               <span>Settings</span>
             </div>
           </div>
           <div className={styles.leftSectionLower}>
-            <div onClick={() => handleComponentChange('logout')}>
+            <div className={styles.componentHover} onClick={() => handleComponentChange('logout')}>
               <img src={logoutIcon} alt='logout-icon'></img>
               <span onClick={logout}>Logout</span>
             </div>

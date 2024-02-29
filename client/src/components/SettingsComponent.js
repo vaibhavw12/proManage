@@ -13,29 +13,29 @@ export default function SettingsComponent() {
   const [passwordView, setPasswordView] = useState(false);
   const [confirmPasswordView, setConfirmPasswordView] = useState(false);
   const [profile, setProfile] = useState(null)
-
   const [updateState, setUpdateState] = useState({
     name: '',
     oldPassword: '',
     newPassword: '',
   });
-  useEffect(()=>{
-    const fetchProfile = async()=>{
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}${PROFILE}${localStorage.getItem("proManage_id")}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'jwttoken': localStorage.getItem("proManage_token")
-            }
+  const fetchProfile = async()=>{
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}${PROFILE}${localStorage.getItem("proManage_id")}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'jwttoken': localStorage.getItem("proManage_token")
           }
-        );
-        setProfile(response.data)
-      } catch (error) {
-        console.error('Error updating todo section:', error);
-      }
+        }
+      );
+      setProfile(response.data)
+      localStorage.setItem("proManage_name", response.data.name)
+    } catch (error) {
+      console.error('Error updating todo section:', error);
     }
+  }
+  useEffect(()=>{
     fetchProfile()
   },[])
 
@@ -57,9 +57,9 @@ export default function SettingsComponent() {
   const update = async (e) => {
     e.preventDefault();
     updateState.prevPassword = profile.password
-    console.log(updateState);
+    // console.log(updateState);
     try {
-      await axios.patch(
+      const response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}${UPDATEPROFILE}${localStorage.getItem("proManage_id")}`,
         { updateState },
         {
@@ -69,9 +69,14 @@ export default function SettingsComponent() {
           }
         }
       );
-      toast.success('profile updated successfulyy')
+      if(response.data.status === 'SUCCESS'){
+        toast.success('profile updated successfully')
+        fetchProfile()
+      }else{
+        toast.error('something went wrong', response.data)
+      }
     } catch (error) {
-      toast.error('something went wrong')
+      toast.error('Error updating profile:', error.message)
       console.error('Error updating profile:', error);
     }
   };

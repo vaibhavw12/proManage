@@ -1,7 +1,9 @@
 const todoModel = require('../models/todo.models.js')
 const authModel = require('../models/auth.models.js')
+const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv')
 dotenv.config()
+
 
 const createToDo = async (req, res, next) => {
     const todoObj = req.body

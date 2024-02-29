@@ -1,7 +1,7 @@
 .CardSectionComponent{
-    min-width: 24vw ;
+    min-width: 23vw ;
     background: rgba(238, 242, 245, 1);
-    height: 74vh;
+    height: 78vh;
     border-radius: 20px;
 }
 .HeaderOuter{
@@ -25,16 +25,33 @@
     display: flex;
     justify-content: center;
 }
-.fullToDo{  
-    max-height: 65vh;
+.hover:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 0.97;
+}
+.fullToDo {
+    max-height: 70vh;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     gap: 1.5vh;
 }
-.hover:hover{
-    cursor: pointer;
-    opacity: 0.8;
-    scale: 0.97;
+
+.fullToDo::-webkit-scrollbar {
+    width: 10px; /* Width of the entire scrollbar */
+}
+
+.fullToDo::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color of the tracking area */
+}
+
+.fullToDo::-webkit-scrollbar-thumb {
+    background-color: rgba(141, 170, 185, 0.8); /* Color of the thumb */
+    border-radius: 6px; /* Rounded corners of the thumb */
+}
+
+.fullToDo::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the thumb on hover */
 }

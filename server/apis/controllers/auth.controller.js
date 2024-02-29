@@ -75,30 +75,51 @@ const profile = async (req, res) => {
 }
 
 const update = async (req, res) => {
-    const { userId } = req.params;
-    const { updateState } = req.body
-    console.log(updateState)
-    console.log(userId)
     try {
-        const decryptPassword = bcrypt.compareSync(updateState.oldPassword, updateState.prevPassword)
-        if (decryptPassword) {
-            const hashedPassword = bcrypt.hashSync(updateState.newPassword, 12)
-            await authModel.findByIdAndUpdate(userId, { name: updateState.name, password :  hashedPassword});
+        const { userId } = req.params;
+        const { updateState } = req.body;
+
+        // console.log(updateState)
+        if (updateState.newPassword.trim() !== '' || updateState.name.trim() !== '') {
+            // At least one of name or password is provided
+            if (updateState.newPassword.trim() !== '') {
+                const decryptPassword = bcrypt.compareSync(updateState.oldPassword, updateState.prevPassword);
+                // console.log(decryptPassword)
+                if (decryptPassword) {
+                    const hashedPassword = bcrypt.hashSync(updateState.newPassword, 12);
+                    await authModel.findByIdAndUpdate(userId, { password: hashedPassword });
+                } else {
+                    res.json({
+                        status: 'FAILED',
+                        message: 'Please check your old password!'
+                    });
+                    return;
+                }
+            }
+
+            if (updateState.name.trim() !== '') {
+                await authModel.findByIdAndUpdate(userId, { name: updateState.name });
+            }
+
             res.json({
-                status : 'SUCCESS',
-                message : 'profile updated successfully!'
-            })
-          } else {
+                status: 'SUCCESS',
+                message: 'Profile updated successfully!'
+            });
+
+        } else {
+            // Neither name nor password is provided
             res.json({
-                status : 'FAILED',
-                message : 'please check your old password!'
+                status: 'FAILED',
+                message: 'No valid update data provided.'
             });
         }
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }
+
 
 module.exports = {
     register,

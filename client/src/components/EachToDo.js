@@ -47,7 +47,7 @@ export default function EachToDo({ todo }) {
                 }
             );
             dispatch(setUpdate())
-            console.log(`Todo moved to section: ${clickedSection}`);
+            toast.success(`Todo moved to section: ${clickedSection}`);
         } catch (error) {
             console.error('Error updating todo section:', error);
         }

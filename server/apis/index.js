@@ -17,12 +17,12 @@ const todoRoutes = require('./routes/todo.route.js')
 app.use('/api/auth', authRoutes)
 app.use('/api/auth/todo', todoRoutes)
 
-app.get('/check',(req, res)=>{
-    res.json({
-        status : 'SUCCESS',
-        message : 'server is up and running'
-    })
-})
+// app.get('/check',(req, res)=>{
+//     res.json({
+//         status : 'SUCCESS',
+//         message : 'server is up and running'
+//     })
+// })
 
 app.listen(port, () => {
     try{
