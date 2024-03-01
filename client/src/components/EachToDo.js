@@ -138,7 +138,7 @@ export default function EachToDo({ todo }) {
             setDeleteModal(true)
         } else if (option === 'Share') {
             try {
-                const linkToCopy = `${process.env.REACT_APP_BASE_URL}/shared-todo/${todo._id}`
+                const linkToCopy = `${process.env.REACT_APP_CLIENT_URL}/shared-todo/${todo._id}`
                 await navigator.clipboard.writeText(linkToCopy);
                 toast.success('Link copied successfully');
             } catch (error) {
